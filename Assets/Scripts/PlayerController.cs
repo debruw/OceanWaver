@@ -12,15 +12,27 @@ public class PlayerController : MonoBehaviour
     Ray ray;
     public bool isOverUI;
     bool isMouseButtonDown;
+    float countDown, maxCountDown = 2;
+
+    private void Start()
+    {
+        countDown = maxCountDown;
+    }
 
     private void Update()
     {
+        if (!GameManager.Instance.isGameStarted || GameManager.Instance.isGameOver)
+        {
+            return;
+        }
+        countDown += Time.deltaTime;
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 return;
             }
+            lineRenderer.enabled = true;
             isMouseButtonDown = true;
             startPosition = Input.mousePosition;
 
@@ -56,26 +68,24 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            if (isMouseButtonDown)
+            if (isMouseButtonDown && countDown > maxCountDown)
             {
+                countDown = 0;
                 endPosition = Input.mousePosition;
 
                 ray = Camera.main.ScreenPointToRay(startPosition);
                 // Does the ray intersect any objects excluding the player layer
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.Log(hit.point);
-                    if (startPosition.x > Input.mousePosition.x)
-                    {
-                        GameManager.Instance.CreateWave(transform, new Vector3(hit.point.x + 3, .94f, transform.position.z - 3), -(Mathf.Atan2(lineRenderer.GetPosition(1).z - lineRenderer.GetPosition(0).z, lineRenderer.GetPosition(1).x - lineRenderer.GetPosition(0).x) * 180 / Mathf.PI) + 180, 8, Vector3.one);
-                    }
-                    else
-                    {
-                        GameManager.Instance.CreateWave(transform, new Vector3(hit.point.x - 3, .94f, transform.position.z - 3), -(Mathf.Atan2(lineRenderer.GetPosition(1).z - lineRenderer.GetPosition(0).z, lineRenderer.GetPosition(1).x - lineRenderer.GetPosition(0).x) * 180 / Mathf.PI) + 180, 8, Vector3.one);
-                    }
+                    Vector3 newOne = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
+                    newOne = newOne / Vector3.Distance(lineRenderer.GetPosition(1), lineRenderer.GetPosition(0));
+                    newOne = lineRenderer.GetPosition(0) - (newOne * 8);
+
+                    GameManager.Instance.CreateWave(transform, new Vector3(newOne.x, .94f, newOne.z), -(Mathf.Atan2(lineRenderer.GetPosition(1).z - lineRenderer.GetPosition(0).z, lineRenderer.GetPosition(1).x - lineRenderer.GetPosition(0).x) * 180f / Mathf.PI), Vector3.one);
                 }
+                lineRenderer.enabled = false;
                 isMouseButtonDown = false;
-            }            
+            }
         }
     }
 }
