@@ -17,9 +17,15 @@ public class Target : MonoBehaviour
     {
         if (other.CompareTag("Point") && !GameManager.Instance.isGameOver)
         {
-            Destroy(other.transform.parent.gameObject, 2);
-            myRenderer.material.DOFloat(1, "_DissolveAmount", 1);
-            StartCoroutine(GameManager.Instance.WaitAndGameWin());
+            StartCoroutine(WaitAndDestroy(other.transform.parent.gameObject));
         }
+    }
+
+    IEnumerator WaitAndDestroy(GameObject go)
+    {
+        yield return new WaitForSeconds(.25f);
+        Destroy(go, 2);
+        myRenderer.material.DOFloat(1, "_DissolveAmount", 1);
+        StartCoroutine(GameManager.Instance.WaitAndGameWin());
     }
 }

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: StylizedWater
   m_Shader: {fileID: 4800000, guid: 4a91c9577c91733478297518e0cb57ed, type: 3}
-  m_ShaderKeywords: _SECONDARYFOAMALWAYSVISIBLE_ON _SHADOWS_ON
+  m_ShaderKeywords: _SHADOWS_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -46,23 +46,23 @@ Material:
     m_Floats:
     - _Cutoff: 0.5
     - _FresnelExp: 5
-    - _GradientPosition1: 2.3328786
-    - _GradientPosition2: 2.5
+    - _GradientPosition1: 5
+    - _GradientPosition2: 4.553571
     - _LightColorIntensity: 1
-    - _MainFoamIntensity: 4
+    - _MainFoamIntensity: 1.4
     - _MainFoamOpacity: 1
-    - _MainFoamScale: 80
+    - _MainFoamScale: 17.36
     - _MainFoamSpeed: 0.2
-    - _Opacity: 0.33
-    - _OpacityDepth: 2.9
-    - _RealTimeReflection: 1
+    - _Opacity: 0
+    - _OpacityDepth: 3
+    - _RealTimeReflection: 0
     - _ReflectionsIntensity: 1.33
     - _RefractionIntensity: 1.71
     - _Roughness: 0.316
     - _SecondaryFoamAlwaysVisible: 0
-    - _SecondaryFoamIntensity: 3.8
+    - _SecondaryFoamIntensity: 4.8
     - _SecondaryFoamOpacity: 1
-    - _SecondaryFoamScale: 57.01
+    - _SecondaryFoamScale: 17.6
     - _ShadowIntensity: 1
     - _Shadows: 1
     - _ShadowsIntensity: 1
@@ -71,14 +71,14 @@ Material:
     - _TurbulenceScale: 15.53
     - _VertexOffset: 0
     - _WaveDistortionIntensity: 0.59
-    - _WavesAmplitude: 3.74
-    - _WavesDirection: 77
-    - _WavesIntensity: 1.97
-    - _WavesSpeed: 1
+    - _WavesAmplitude: 5
+    - _WavesDirection: 48
+    - _WavesIntensity: 3
+    - _WavesSpeed: 2
     m_Colors:
-    - _DepthGradient1: {r: 0.4156863, g: 0.6392157, b: 0.9058824, a: 1}
-    - _DepthGradient2: {r: 0, g: 0.15466529, b: 0.36764705, a: 1}
-    - _DepthGradient3: {r: 0.017409164, g: 0.04984338, b: 0.16911763, a: 1}
+    - _DepthGradient1: {r: 0.31575587, g: 1, b: 0.94340754, a: 1}
+    - _DepthGradient2: {r: 0.13457915, g: 0.24567473, b: 0.6544117, a: 1}
+    - _DepthGradient3: {r: 0.038657, g: 0.28317302, b: 0.4042507, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 0, g: 0.37931037, b: 1, a: 1}
+    - _FresnelColor: {r: 0.7205882, g: 0.907505, b: 1, a: 1}
     - _ShadowColor: {r: 0.009191178, g: 0.033871744, b: 0.125, a: 1}

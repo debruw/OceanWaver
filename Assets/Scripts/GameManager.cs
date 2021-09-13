@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
         newAttractorShape.distance = 3;
         newAttractorShape.force = 3;
         newWave.GetComponentInChildren<MegaShapeCircle>().isMoving = true;
+        GameManager.Instance.MakePeopleEscape();
     }
 
     public IEnumerator WaitAndControlNullAttractorShapes(GameObject ReflectorObject)
@@ -98,37 +100,54 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public NavMeshAgent[] peoples;
+    public Transform[] targets;
+    public void MakePeopleEscape()
+    {
+        foreach (NavMeshAgent item in peoples)
+        {
+            item.GetComponent<Animator>().SetTrigger("Run");
+            item.SetDestination(targets[Random.Range(0, targets.Length)].position);
+        }
+    }
+
     public IEnumerator WaitAndGameWin()
     {
-        Debug.Log("Win");
-        isGameOver = true;
+        if (!isGameOver)
+        {
+            Debug.Log("Win");
+            isGameOver = true;
 
-        //SoundManager.Instance.StopAllSounds();
-        //SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+            //SoundManager.Instance.StopAllSounds();
+            //SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
-        //if (PlayerPrefs.GetInt("VIBRATION") == 1)
-        //    TapticManager.Impact(ImpactFeedback.Light);
+            //if (PlayerPrefs.GetInt("VIBRATION") == 1)
+            //    TapticManager.Impact(ImpactFeedback.Light);
 
-        currentLevel++;
-        PlayerPrefs.SetInt("LevelId", currentLevel);
-        WinPanel.SetActive(true);
+            currentLevel++;
+            PlayerPrefs.SetInt("LevelId", currentLevel);
+            WinPanel.SetActive(true);
+        }
     }
 
     public IEnumerator WaitAndGameLose()
     {
-        Debug.Log("Lose");
-        isGameOver = true;
+        if (!isGameOver)
+        {
+            Debug.Log("Lose");
+            isGameOver = true;
 
-        //SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
+            //SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
-        //if (PlayerPrefs.GetInt("VIBRATION") == 1)
-        //    TapticManager.Impact(ImpactFeedback.Medium);
+            //if (PlayerPrefs.GetInt("VIBRATION") == 1)
+            //    TapticManager.Impact(ImpactFeedback.Medium);
 
-        LosePanel.SetActive(true);
+            LosePanel.SetActive(true);
+        }
     }
 
     public void TapToNextButtonClick()
