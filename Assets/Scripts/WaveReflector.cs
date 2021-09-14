@@ -18,6 +18,13 @@ public class WaveReflector : MonoBehaviour
               });
 
             gameObject.GetComponent<Collider>().enabled = false;
+            StartCoroutine(WaitAndOpenCollider());
         }
+    }
+
+    IEnumerator WaitAndOpenCollider()
+    {
+        yield return new WaitForSeconds(.5f);
+        gameObject.GetComponent<Collider>().enabled = true;
     }
 }
