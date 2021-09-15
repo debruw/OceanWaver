@@ -102,12 +102,18 @@ public class GameManager : MonoBehaviour
 
     public NavMeshAgent[] peoples;
     public Transform[] targets;
+    bool isPeopleEscaped;
     public void MakePeopleEscape()
     {
-        foreach (NavMeshAgent item in peoples)
+        if (!isPeopleEscaped)
         {
-            item.GetComponent<Animator>().SetTrigger("Run");
-            item.SetDestination(targets[Random.Range(0, targets.Length)].position);
+            isPeopleEscaped = true;
+
+            foreach (NavMeshAgent item in peoples)
+            {
+                item.GetComponent<Animator>().SetTrigger("Run");
+                item.SetDestination(targets[Random.Range(0, targets.Length)].position);
+            }
         }
     }
 
