@@ -39,7 +39,7 @@ public class Target : MonoBehaviour
             }
             else
             {
-                StartCoroutine(WaitAndDestroyFire());
+                StartCoroutine(WaitAndDestroyFire(other.transform.parent.gameObject));
             }
         }
     }
@@ -52,13 +52,15 @@ public class Target : MonoBehaviour
         StartCoroutine(GameManager.Instance.WaitAndGameWin());
     }
 
-    IEnumerator WaitAndDestroyFire()
+    IEnumerator WaitAndDestroyFire(GameObject go)
     {
         yield return new WaitForSeconds(.1f);
+        Destroy(go, 2);
         foreach (var item in particleSystems)
         {
             item.transform.DOScale(Vector3.zero, 1);
         }
+        transform.DOMoveY(0, 1);
         StartCoroutine(GameManager.Instance.WaitAndGameWin());
     }
 }
