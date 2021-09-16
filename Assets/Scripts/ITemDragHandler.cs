@@ -51,6 +51,8 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
     public void OnEndDrag(PointerEventData eventData)
     {
         GameManager.Instance.playerController.isOverUI = false;
-        Destroy(gameObject);
+        transform.position = firstPos;
+        gameObject.GetComponent<Image>().color = Color.white;
+        instantiated = null;
     }
 }

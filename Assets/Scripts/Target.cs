@@ -6,26 +6,59 @@ using DG.Tweening;
 
 public class Target : MonoBehaviour
 {
+    public enum TargetType
+    {
+        SandCastle,
+        Fire
+    }
     MeshRenderer myRenderer;
+    ParticleSystem[] particleSystems;
+
+    [SerializeField]
+    TargetType myType;
 
     private void Start()
     {
-        myRenderer = GetComponent<MeshRenderer>();
+        if (myType.Equals(TargetType.SandCastle))
+        {
+            myRenderer = GetComponent<MeshRenderer>();
+        }
+        else
+        {
+            particleSystems = GetComponentsInChildren<ParticleSystem>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Point") && !GameManager.Instance.isGameOver)
         {
-            StartCoroutine(WaitAndDestroy(other.transform.parent.gameObject));
+            if (myType.Equals(TargetType.SandCastle))
+            {
+                StartCoroutine(WaitAndDestroySandCastle(other.transform.parent.gameObject));
+            }
+            else
+            {
+                StartCoroutine(WaitAndDestroyFire());
+            }
         }
     }
 
-    IEnumerator WaitAndDestroy(GameObject go)
+    IEnumerator WaitAndDestroySandCastle(GameObject go)
     {
         yield return new WaitForSeconds(.25f);
         Destroy(go, 2);
         myRenderer.material.DOFloat(1, "_DissolveAmount", 1);
+        StartCoroutine(GameManager.Instance.WaitAndGameWin());
+    }
+
+    IEnumerator WaitAndDestroyFire()
+    {
+        yield return new WaitForSeconds(.1f);
+        foreach (var item in particleSystems)
+        {
+            item.transform.DOScale(Vector3.zero, 1);
+        }
         StartCoroutine(GameManager.Instance.WaitAndGameWin());
     }
 }
