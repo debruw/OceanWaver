@@ -301,7 +301,7 @@ MonoBehaviour:
   LosePanel: {fileID: 478213372983583589}
   InGamePanel: {fileID: 478213371199535871}
   TapToStartButton: {fileID: 478213371907437935}
-  LevelText: {fileID: 8675388767187440849}
+  LevelText: {fileID: 8633667055389131160}
   PlayText: {fileID: 892037319874649487}
   ContinueText: {fileID: 1772366670668853657}
   playerController: {fileID: 4010092895296227364}
@@ -546,16 +546,16 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1775045666992298491}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8675388767187440849 stripped
+--- !u!114 &8633667055389131160 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6973567560649477418, guid: b21abae9bb6a8a34c878f3235bfb8d79,
+  m_CorrespondingSourceObject: {fileID: 8030701884192479331, guid: b21abae9bb6a8a34c878f3235bfb8d79,
     type: 3}
   m_PrefabInstance: {fileID: 1775045666992298491}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &478213372514126600 stripped

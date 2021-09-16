@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     #region UI Elements
     public GameObject WinPanel, LosePanel, InGamePanel;
     public Button TapToStartButton;
-    public Text LevelText;
+    public TextMeshProUGUI LevelText;
     public GameObject PlayText, ContinueText;
     #endregion
 

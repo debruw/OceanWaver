@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class WaveReflector : MonoBehaviour
@@ -12,19 +13,25 @@ public class WaveReflector : MonoBehaviour
         if (other.CompareTag("Point"))
         {
             Instantiate(particlePrefab, other.transform.position, Quaternion.identity);
-            other.transform.parent.DORotate(new Vector3(0, Vector3.Angle(Vector3.Reflect(other.transform.right, Vector3.forward), -Vector3.right), 0), .25f).OnComplete(() =>
-              {
-
-              });
-
+            Instantiate(particlePrefab, other.transform.position + new Vector3(0, 0, 1), Quaternion.identity);
+            Instantiate(particlePrefab, other.transform.position + new Vector3(0, 0, 2), Quaternion.identity);
+            other.transform.parent.DORotate(new Vector3(0, Vector3.Angle(Vector3.Reflect(other.transform.right, Vector3.forward), -Vector3.right), 0), .25f);
             gameObject.GetComponent<Collider>().enabled = false;
-            StartCoroutine(WaitAndOpenCollider());
+            StartCoroutine(WaitAndOpenCollider(1f));
         }
     }
 
-    IEnumerator WaitAndOpenCollider()
+    private void OnTriggerExit(Collider other)
     {
-        yield return new WaitForSeconds(.5f);
+        if (other.CompareTag("Point"))
+        {
+            StartCoroutine(WaitAndOpenCollider(.5f));
+        }
+    }
+
+    IEnumerator WaitAndOpenCollider(float count)
+    {
+        yield return new WaitForSeconds(count);
         gameObject.GetComponent<Collider>().enabled = true;
     }
 }
