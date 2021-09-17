@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     public LineRenderer lineRenderer;
     RaycastHit hit;
     Ray ray;
-    public bool isOverUI;
     bool isMouseButtonDown;
     float countDown, maxCountDown = 2;
 
@@ -28,10 +27,10 @@ public class PlayerController : MonoBehaviour
         countDown += Time.deltaTime;
         if (Input.GetMouseButtonDown(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsPointerOverUIObject())
             {
                 return;
-            }
+            }            
             lineRenderer.enabled = true;
             isMouseButtonDown = true;
             startPosition = Input.mousePosition;
@@ -45,7 +44,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsPointerOverUIObject())
             {
                 return;
             }
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (IsPointerOverUIObject())
             {
                 return;
             }
@@ -87,5 +86,14 @@ public class PlayerController : MonoBehaviour
                 isMouseButtonDown = false;
             }
         }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

@@ -17,7 +17,6 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        GameManager.Instance.playerController.isOverUI = true;
         transform.position = Input.mousePosition;
         RectTransform invPanel = transform.parent.transform as RectTransform;
 
@@ -50,7 +49,6 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        GameManager.Instance.playerController.isOverUI = false;
         transform.position = firstPos;
         gameObject.GetComponent<Image>().color = Color.white;
         instantiated = null;
