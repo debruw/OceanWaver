@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TapticPlugin;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,6 +18,10 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (GameManager.Instance.currentLevel == 2)
+        {
+            GameManager.Instance.Tutorial2.SetActive(false);
+        }
         transform.position = Input.mousePosition;
         RectTransform invPanel = transform.parent.transform as RectTransform;
 
@@ -52,5 +57,8 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         transform.position = firstPos;
         gameObject.GetComponent<Image>().color = Color.white;
         instantiated = null;
+        SoundManager.Instance.playSound(SoundManager.GameSounds.ReflectorPlace);
+        if (PlayerPrefs.GetInt("VIBRATION") == 1)
+            TapticManager.Impact(ImpactFeedback.Light);
     }
 }

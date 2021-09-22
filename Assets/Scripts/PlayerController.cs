@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
     RaycastHit hit;
     Ray ray;
     bool isMouseButtonDown;
-    float countDown, maxCountDown = 2;
+    float countDown, maxCountDown = 1f;
 
     private void Start()
     {
-        countDown = maxCountDown;
+        countDown = maxCountDown;        
     }
 
     private void Update()
@@ -25,24 +25,28 @@ public class PlayerController : MonoBehaviour
             return;
         }
         countDown += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && countDown > maxCountDown)
         {
+            if (GameManager.Instance.currentLevel == 1)
+            {
+                GameManager.Instance.Tutorial1.SetActive(false);
+            }
             if (IsPointerOverUIObject())
             {
                 return;
-            }            
+            }
             lineRenderer.enabled = true;
             isMouseButtonDown = true;
             startPosition = Input.mousePosition;
 
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            // Does the ray intersect any objects excluding the player layer
+            // Does the ray intersect any objects excluding the layer
             if (Physics.Raycast(ray, out hit))
             {
                 lineRenderer.SetPosition(0, new Vector3(hit.point.x, 0, hit.point.z));
             }
         }
-        else if (Input.GetMouseButton(0))
+        else if (Input.GetMouseButton(0) && countDown > maxCountDown)
         {
             if (IsPointerOverUIObject())
             {

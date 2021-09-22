@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using TMPro;
+using TapticPlugin;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     public int currentLevel = 1;
-    int MaxLevelNumber = 2;
+    int MaxLevelNumber = 6;
     public bool isGameStarted, isGameOver;
 
     #region UI Elements
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
     public Button TapToStartButton;
     public TextMeshProUGUI LevelText;
     public GameObject PlayText, ContinueText;
+    public GameObject Tutorial1, Tutorial2;
     #endregion
 
     public PlayerController playerController;
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour
         newAttractorShape.distance = 3;
         newAttractorShape.force = 3;
         newWave.GetComponentInChildren<MegaShapeCircle>().isMoving = true;
-        GameManager.Instance.MakePeopleEscape();
+        MakePeopleEscape();
     }
 
     public IEnumerator WaitAndControlNullAttractorShapes(GameObject ReflectorObject)
@@ -125,13 +127,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("Win");
             isGameOver = true;
 
-            //SoundManager.Instance.StopAllSounds();
-            //SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+            SoundManager.Instance.StopAllSounds();
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
 
             yield return new WaitForSeconds(1f);
 
-            //if (PlayerPrefs.GetInt("VIBRATION") == 1)
-            //    TapticManager.Impact(ImpactFeedback.Light);
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Light);
 
             currentLevel++;
             PlayerPrefs.SetInt("LevelId", currentLevel);
@@ -146,12 +148,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("Lose");
             isGameOver = true;
 
-            //SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
 
             yield return new WaitForSeconds(1f);
 
-            //if (PlayerPrefs.GetInt("VIBRATION") == 1)
-            //    TapticManager.Impact(ImpactFeedback.Medium);
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Medium);
 
             LosePanel.SetActive(true);
         }
@@ -187,5 +189,13 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = true;
         TapToStartButton.gameObject.SetActive(false);
+        if (currentLevel == 1)
+        {
+            Tutorial1.SetActive(true);
+        }
+        if (currentLevel == 2)
+        {
+            Tutorial2.SetActive(true);
+        }
     }
 }

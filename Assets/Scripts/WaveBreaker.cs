@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TapticPlugin;
 
 public class WaveBreaker : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class WaveBreaker : MonoBehaviour
     {
         if (other.CompareTag("Point"))
         {
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Splash);
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Light);
             ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
             foreach (ParticleSystem item in particles)
             {

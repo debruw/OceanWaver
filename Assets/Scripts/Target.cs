@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using TapticPlugin;
 
 public class Target : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class Target : MonoBehaviour
 
     [SerializeField]
     TargetType myType;
+    public Target otherTarget;
+    bool isDestroyed;
 
     private void Start()
     {
@@ -33,6 +35,10 @@ public class Target : MonoBehaviour
     {
         if (other.CompareTag("Point") && !GameManager.Instance.isGameOver)
         {
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Splash);
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Light);
+
             if (myType.Equals(TargetType.SandCastle))
             {
                 StartCoroutine(WaitAndDestroySandCastle(other.transform.parent.gameObject));
@@ -49,7 +55,11 @@ public class Target : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         Destroy(go, 2);
         myRenderer.material.DOFloat(1, "_DissolveAmount", 1);
-        StartCoroutine(GameManager.Instance.WaitAndGameWin());
+        isDestroyed = true;
+        if (otherTarget == null|| otherTarget.isDestroyed)
+        {
+            StartCoroutine(GameManager.Instance.WaitAndGameWin()); 
+        }
     }
 
     IEnumerator WaitAndDestroyFire(GameObject go)
@@ -61,6 +71,10 @@ public class Target : MonoBehaviour
             item.transform.DOScale(Vector3.zero, 1);
         }
         transform.DOMoveY(0, 1);
-        StartCoroutine(GameManager.Instance.WaitAndGameWin());
+        isDestroyed = true;
+        if (otherTarget == null || otherTarget.isDestroyed)
+        {
+            StartCoroutine(GameManager.Instance.WaitAndGameWin());
+        }
     }
 }

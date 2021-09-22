@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TapticPlugin;
 
 public class WaveReflector : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class WaveReflector : MonoBehaviour
     {
         if (other.CompareTag("Point"))
         {
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Splash);
+            if (PlayerPrefs.GetInt("VIBRATION") == 1)
+                TapticManager.Impact(ImpactFeedback.Light);
             Instantiate(particlePrefab, other.transform.position, Quaternion.identity);
             Instantiate(particlePrefab, other.transform.position + new Vector3(0, 0, 1), Quaternion.identity);
             Instantiate(particlePrefab, other.transform.position + new Vector3(0, 0, 2), Quaternion.identity);
