@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        countDown = maxCountDown;        
+        countDown = maxCountDown;
     }
 
     private void Update()
@@ -24,12 +24,25 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        if (Input.mousePosition.y > Screen.height / 3)
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+        else if(isMouseButtonDown)
+        {
+            lineRenderer.enabled = true;
+        }
         countDown += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && countDown > maxCountDown)
         {
             if (GameManager.Instance.currentLevel == 1)
             {
                 GameManager.Instance.Tutorial1.SetActive(false);
+            }
+            if (GameManager.Instance.currentLevel == 2 && GameManager.Instance.Tutorial3.activeSelf)
+            {
+                GameManager.Instance.Tutorial3.SetActive(false);
             }
             if (IsPointerOverUIObject())
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TapticPlugin;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,14 +11,21 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
     Vector3 firstPos;
     public GameObject ReflectorPrefab;
     GameObject instantiated;
+    public TextMeshProUGUI countText;
+    public int count = 2;
 
     private void Start()
     {
         firstPos = transform.position;
+        countText.text = count.ToString();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (count <= 0)
+        {
+            return;
+        }
         if (GameManager.Instance.currentLevel == 2)
         {
             GameManager.Instance.Tutorial2.SetActive(false);
@@ -36,7 +44,7 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
                 // Does the ray intersect any objects excluding the player layer
                 if (Physics.Raycast(ray, out hit))
                 {
-                    instantiated = Instantiate(ReflectorPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);
+                    instantiated = Instantiate(ReflectorPrefab, new Vector3(hit.point.x, 0, hit.point.z), Quaternion.identity);                    
                 }
 
             }
@@ -54,6 +62,16 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (count <= 0)
+        {
+            return;
+        }
+        count--;
+        countText.text = count.ToString();
+        if (GameManager.Instance.currentLevel == 2)
+        {
+            GameManager.Instance.Tutorial3.SetActive(true);
+        }
         transform.position = firstPos;
         gameObject.GetComponent<Image>().color = Color.white;
         instantiated = null;

@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     public Button TapToStartButton;
     public TextMeshProUGUI LevelText;
     public GameObject PlayText, ContinueText;
-    public GameObject Tutorial1, Tutorial2;
+    public GameObject Tutorial1, Tutorial2, Tutorial3;
     #endregion
 
     public PlayerController playerController;
