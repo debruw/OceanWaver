@@ -24,16 +24,6 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        if (Input.mousePosition.y > Screen.height / 2)
-        {
-            lineRenderer.enabled = false;
-            return;
-        }
-        else if (isMouseButtonDown)
-        {
-            lineRenderer.enabled = true;
-        }
         countDown += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && countDown > maxCountDown)
         {
@@ -41,9 +31,13 @@ public class PlayerController : MonoBehaviour
             {
                 GameManager.Instance.Tutorial1.SetActive(false);
             }
-            if (GameManager.Instance.currentLevel == 2 && GameManager.Instance.Tutorial3.activeSelf)
+            if (GameManager.Instance.currentLevel == 3 && GameManager.Instance.Tutorial3.activeSelf)
             {
                 GameManager.Instance.Tutorial3.SetActive(false);
+            }
+            if (GameManager.Instance.WaveCantPass !=null)
+            {
+                GameManager.Instance.WaveCantPass.SetActive(false);
             }
             if (IsPointerOverUIObject())
             {
@@ -100,7 +94,7 @@ public class PlayerController : MonoBehaviour
                         newOne = newOne / Vector3.Distance(lineRenderer.GetPosition(1), lineRenderer.GetPosition(0));
                         newOne = lineRenderer.GetPosition(0) - (newOne * 8);
                         GameManager.Instance.CreateWave(transform, new Vector3(newOne.x, .94f, newOne.z), -(Mathf.Atan2(lineRenderer.GetPosition(1).z - lineRenderer.GetPosition(0).z, lineRenderer.GetPosition(1).x - lineRenderer.GetPosition(0).x) * 180f / Mathf.PI), Vector3.one);
-                    }                    
+                    }
                 }
                 lineRenderer.enabled = false;
                 isMouseButtonDown = false;

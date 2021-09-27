@@ -26,7 +26,7 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             return;
         }
-        if (GameManager.Instance.currentLevel == 2)
+        if (GameManager.Instance.currentLevel == 3)
         {
             GameManager.Instance.Tutorial2.SetActive(false);
         }
@@ -68,7 +68,7 @@ public class ITemDragHandler : MonoBehaviour, IDragHandler, IEndDragHandler
         }
         count--;
         countText.text = count.ToString();
-        if (GameManager.Instance.currentLevel == 2)
+        if (GameManager.Instance.currentLevel == 3)
         {
             GameManager.Instance.Tutorial3.SetActive(true);
         }

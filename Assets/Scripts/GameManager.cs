@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     public int currentLevel = 1;
-    int MaxLevelNumber = 6;
+    int MaxLevelNumber = 7;
     public bool isGameStarted, isGameOver;
 
     #region UI Elements
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI LevelText;
     public GameObject PlayText, ContinueText;
     public GameObject Tutorial1, Tutorial2, Tutorial3;
+    public GameObject WaveCantPass;
     #endregion
 
     public PlayerController playerController;
@@ -193,7 +194,7 @@ public class GameManager : MonoBehaviour
         {
             Tutorial1.SetActive(true);
         }
-        if (currentLevel == 2)
+        if (currentLevel == 3)
         {
             Tutorial2.SetActive(true);
         }
